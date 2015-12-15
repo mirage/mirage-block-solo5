@@ -1,31 +1,17 @@
 OASISFormat: 0.4
-Name:        mirage-block-xen
+Name:        mirage-block-solo5
 Version:     1.3.1
-Synopsis:    Xen block frontend and backend driver implementation
+Synopsis:    Solo5 block frontend and backend driver implementation
 Authors:     Jonathan Ludlam, Anil Madhavapeddy, David Scott
 License:     ISC
 Plugins:     META (0.4)
 BuildTools:  ocamlbuild
 
-Library mirage_block_xen
-  CompiledObject:     best
+Library mirage_block_solo5
+  CompiledObject:     native
   Path:               lib
-  Findlibname:        mirage-block-xen
-  Modules:            Blkproto, Device_number
-  BuildDepends:       cstruct, cstruct.syntax
-
-Library mirage_block_xen_front
-  CompiledObject:     best
-  Path:               lib
-  Findlibparent:      mirage_block_xen
-  Findlibname:        front
-  Modules:            Blkfront, Block
-  BuildDepends:       lwt, lwt.syntax, cstruct, cstruct.syntax, mirage-types, io-page, shared-memory-ring, shared-memory-ring.lwt, mirage-block-xen, xen-evtchn, xen-gnt, mirage-xen
-
-Library mirage_block_xen_back
-  CompiledObject:     best
-  Path:               lib
-  Findlibparent:      mirage_block_xen
-  Findlibname:        back
-  Modules:            Blkback, Block_request
-  BuildDepends:       lwt, lwt.syntax, cstruct, cstruct.syntax, io-page, shared-memory-ring, shared-memory-ring.lwt, mirage-block-xen, xen-evtchn, xen-gnt, xenstore
+  Findlibname:        mirage-block-solo5
+  Modules:            Block
+  BuildDepends:       cstruct, cstruct.syntax, lwt, lwt.syntax, mirage-types, io-page
+  CSources:           solo5_stubs.c
+  CCOpt:              -ffreestanding -mcmodel=large -mno-red-zone -mno-3dnow -std=gnu99 -O0 -Wall -Wextra -Werror -g -fno-PIC -I/root/solo5/kernel

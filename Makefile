@@ -1,15 +1,8 @@
 .PHONY: all clean install build
 all: build doc
 
-NAME=mirage-block-xen
+NAME=mirage-block-solo5
 J=4
-
-include config.mk
-config.mk: configure
-	./configure
-
-configure: configure.ml
-	ocamlfind ocamlopt -package "cmdliner,findlib" -linkpkg $< -o $@
 
 export OCAMLRUNPARAM=b
 
@@ -18,7 +11,7 @@ setup.bin: setup.ml
 	@rm -f setup.cmx setup.cmi setup.o setup.cmo
 
 setup.data: setup.bin
-	@./setup.bin -configure $(ENABLE_BLKFRONT) $(ENABLE_BLKBACK)
+	@./setup.bin -configure
 
 build: setup.data setup.bin
 	@./setup.bin -build -j $(J)
