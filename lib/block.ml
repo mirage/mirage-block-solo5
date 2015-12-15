@@ -47,15 +47,12 @@ external solo5_blk_rw: unit -> bool = "stub_blk_rw"
 
 external solo5_blk_write: int64 -> Cstruct.buffer -> int -> bool = "stub_blk_write"
 external solo5_blk_read: int64 -> Cstruct.buffer -> int -> bool = "stub_blk_read"
-external camlout: string -> int -> unit = "stub_camlout"
 
 let disconnect _id =
-  camlout "disconnect" 11;
   printf "Blkfront: disconnect not implement yet\n";
   return ()
 
 let connect name =
-  camlout "connect" 6553;
   let sector_size = solo5_blk_sector_size () in
   let size_sectors = solo5_blk_sectors () in
   let read_write = solo5_blk_rw () in

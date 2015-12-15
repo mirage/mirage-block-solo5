@@ -87,16 +87,6 @@ CAMLprim value stub_blk_read(value sector, value buffer, value num) {
     CAMLreturn(Val_bool(!ret));
 }
 
-CAMLprim value stub_camlout(value arg, value num) {
-    CAMLparam2(arg, num);
-
-    const char *str = String_val(arg);
-    int n = Int_val(num);
-    printf("%s: %s %d\n", __FILE__, str, n);
-
-    CAMLreturn(Val_unit);
-}
-
 CAMLprim value stub_blk_sector_size(value unit) {
     CAMLparam1(unit);
     CAMLreturn(Val_int(VIRTIO_BLK_SECTOR_SIZE));
