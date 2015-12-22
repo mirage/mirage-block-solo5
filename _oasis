@@ -12,6 +12,6 @@ Library mirage_block_solo5
   Path:               lib
   Findlibname:        mirage-block-solo5
   Modules:            Block
-  BuildDepends:       cstruct, cstruct.syntax, lwt, lwt.syntax, mirage-types, io-page
+  BuildDepends:       cstruct, cstruct.syntax, lwt, lwt.syntax, mirage-types
   CSources:           solo5_stubs.c
-  CCOpt:              -ffreestanding -mcmodel=large -mno-red-zone -mno-3dnow -std=gnu99 -O0 -Wall -Wextra -Werror -g -fno-PIC -I/root/solo5/kernel
+  CCOpt:	-ffreestanding -mcmodel=large -mno-red-zone -mno-3dnow -std=gnu99 -O2 -Wall -Wextra -Werror -D__SOLO5__ -fno-PIC -g   -I/home/solo5/solo5/kernel
