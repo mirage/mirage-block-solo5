@@ -18,7 +18,6 @@ depends: [
   "shared-memory-ring" {>= "0.4.1"}
   "mirage-types" {>= "1.1.0"}
   "ipaddr"
-  "io-page" {>= "1.4.0"}
 ]
 ocaml-version: [>= "4.00.0"]
 os: ["linux"]
