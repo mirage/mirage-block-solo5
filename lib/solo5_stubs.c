@@ -33,8 +33,7 @@ CAMLprim value stub_blk_write(value sector, value buffer, value num) {
     int ret = 0;
 
     assert(Caml_ba_array_val(buffer)->num_dims == 1);
-    assert(Caml_ba_array_val(buffer)->flags & CAML_BA_UINT8);
-
+	
     //printf("Solo5 blk write: sec=%d num=%d\n", sec, n);
 
     ret = virtio_blk_write_sync(sec, data, n);
@@ -64,7 +63,6 @@ CAMLprim value stub_blk_read(value sector, value buffer, value num) {
     int ret = 0;
 
     assert(Caml_ba_array_val(buffer)->num_dims == 1);
-    assert(Caml_ba_array_val(buffer)->flags & CAML_BA_UINT8);
 
     //printf("Solo5 blk read: sec=%d num=%d\n", sec, n);
 
