@@ -36,9 +36,9 @@ CAMLprim value stub_blk_write(value sector, value buffer, value num) {
 	
     //printf("Solo5 blk write: sec=%d num=%d\n", sec, n);
 
-    ret = virtio_blk_write_sync(sec, data, n);
+    ret = solo5_blk_write_sync(sec, data, n);
     if ( ret ) 
-        printf("virtio write failed... %d to sector=%d\n", n, sec);
+        printf("blk write failed... %d to sector=%d\n", n, sec);
 
 #if 0
     {
@@ -66,7 +66,7 @@ CAMLprim value stub_blk_read(value sector, value buffer, value num) {
 
     //printf("Solo5 blk read: sec=%d num=%d\n", sec, n);
 
-    ret = virtio_blk_read_sync(sec, data, &n);
+    ret = solo5_blk_read_sync(sec, data, &n);
     if ( ret )
         printf("virtio read failed... %d from sector=%d\n", n, sec);
 
@@ -87,13 +87,13 @@ CAMLprim value stub_blk_read(value sector, value buffer, value num) {
 
 CAMLprim value stub_blk_sector_size(value unit) {
     CAMLparam1(unit);
-    CAMLreturn(Val_int(VIRTIO_BLK_SECTOR_SIZE));
+    CAMLreturn(Val_int(solo5_blk_sector_size()));
 }
 CAMLprim value stub_blk_sectors(value unit) {
     CAMLparam1(unit);
-    CAMLreturn(caml_copy_int64(virtio_blk_sectors));
+    CAMLreturn(caml_copy_int64(solo5_blk_sectors()));
 }
 CAMLprim value stub_blk_rw(value unit) {
     CAMLparam1(unit);
-    CAMLreturn(Val_bool(1));
+    CAMLreturn(Val_bool(solo5_blk_rw()));
 }
