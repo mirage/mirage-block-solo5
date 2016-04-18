@@ -8,7 +8,7 @@ Plugins:     META (0.4)
 BuildTools:  ocamlbuild
 
 Library mirage_block_solo5
-  CompiledObject:     native
+  CompiledObject:     best
   Path:               lib
   Findlibname:        mirage-block-solo5
   Modules:            Block
