@@ -7,6 +7,3 @@ config.mk
 configure.cmi
 configure.cmx
 configure.o
-lib/mirage_block_solo5.mldylib
-lib/mirage_block_solo5.mllib
-lib/libmirage_block_solo5_stubs.clib
