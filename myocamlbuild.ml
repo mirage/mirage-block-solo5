@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: c204ab80cb1c447a6d0ba50e07be194d) *)
+(* DO NOT EDIT (digest: 6b4de9b85eb92208d0863abbec09d37b) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -608,43 +608,8 @@ open Ocamlbuild_plugin;;
 let package_default =
   {
      MyOCamlbuildBase.lib_ocaml = [("mirage_block_solo5", ["lib"], [])];
-     lib_c = [("mirage_block_solo5", "lib", [])];
-     flags =
-       [
-          (["oasis_library_mirage_block_solo5_ccopt"; "compile"],
-            [
-               (OASISExpr.EBool true,
-                 S
-                   [
-                      A "-ccopt";
-                      A "-ffreestanding";
-                      A "-ccopt";
-                      A "-mcmodel=large";
-                      A "-ccopt";
-                      A "-mno-red-zone";
-                      A "-ccopt";
-                      A "-mno-3dnow";
-                      A "-ccopt";
-                      A "-std=gnu99";
-                      A "-ccopt";
-                      A "-O2";
-                      A "-ccopt";
-                      A "-Wall";
-                      A "-ccopt";
-                      A "-Wextra";
-                      A "-ccopt";
-                      A "-Werror";
-                      A "-ccopt";
-                      A "-D__SOLO5__";
-                      A "-ccopt";
-                      A "-fno-PIC";
-                      A "-ccopt";
-                      A "-g";
-                      A "-ccopt";
-                      A "-I/home/solo5/solo5/kernel"
-                   ])
-            ])
-       ];
+     lib_c = [];
+     flags = [];
      includes = []
   }
   ;;
@@ -653,6 +618,6 @@ let conf = {MyOCamlbuildFindlib.no_automatic_syntax = false}
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default conf package_default;;
 
-# 657 "myocamlbuild.ml"
+# 622 "myocamlbuild.ml"
 (* OASIS_STOP *)
 Ocamlbuild_plugin.dispatch dispatch_default;;
