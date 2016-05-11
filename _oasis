@@ -12,4 +12,4 @@ Library mirage_block_solo5
   Path:               lib
   Findlibname:        mirage-block-solo5
   Modules:            Block
-  BuildDepends:       cstruct, cstruct.syntax, lwt, lwt.syntax, mirage-types
+  BuildDepends:       cstruct, cstruct, lwt, mirage-types

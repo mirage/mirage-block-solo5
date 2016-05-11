@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 7b419118d253a59c537c34c45de246c4)
+# DO NOT EDIT (digest: e828a85056b4a05a2b74d8928aee75b6)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -17,8 +17,6 @@ true: annot, bin_annot
 # Library mirage_block_solo5
 "lib/mirage_block_solo5.cmxs": use_mirage_block_solo5
 <lib/*.ml{,i,y}>: pkg_cstruct
-<lib/*.ml{,i,y}>: pkg_cstruct.syntax
 <lib/*.ml{,i,y}>: pkg_lwt
-<lib/*.ml{,i,y}>: pkg_lwt.syntax
 <lib/*.ml{,i,y}>: pkg_mirage-types
 # OASIS_STOP
