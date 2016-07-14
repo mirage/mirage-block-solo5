@@ -3,6 +3,7 @@ maintainer:   "martin@lucina.net"
 homepage:     "https://github.com/mirage/mirage-block-solo5"
 dev-repo:     "https://github.com/mirage/mirage-block-solo5.git"
 bug-reports:  "https://github.com/mirage/mirage-block-solo5/issues"
+authors:      "Dan Williams <djwllia@us.ibm.com>"
 tags: [
   "org:mirage"
 ]
@@ -17,5 +18,3 @@ depends: [
   "mirage-solo5"
   
 ]
-ocaml-version: [>= "4.00.0"]
-os: ["linux"]
