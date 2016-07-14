@@ -1,12 +1,12 @@
 # OASIS_START
-# DO NOT EDIT (digest: 147fb79a72f69c676cc5510a9d888d6c)
-version = "1.3.1"
-description = "Solo5 block frontend and backend driver implementation"
-requires = "cstruct cstruct lwt mirage-types"
+# DO NOT EDIT (digest: ff8bccea8a8093aa92f8adea46a2112e)
+version = "0.1.1"
+description = "Solo5 block driver implementation"
+requires = "cstruct lwt mirage-types"
 archive(byte) = "mirage_block_solo5.cma"
 archive(byte, plugin) = "mirage_block_solo5.cma"
 archive(native) = "mirage_block_solo5.cmxa"
 archive(native, plugin) = "mirage_block_solo5.cmxs"
-exists_if = "mirage_block_solo5.cma"
+exists_if = "mirage_block_solo5.cmxa"
 # OASIS_STOP
 

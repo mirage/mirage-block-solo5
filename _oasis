@@ -1,15 +1,15 @@
 OASISFormat: 0.4
 Name:        mirage-block-solo5
-Version:     1.3.1
-Synopsis:    Solo5 block frontend and backend driver implementation
-Authors:     Jonathan Ludlam, Anil Madhavapeddy, David Scott
+Version:     0.1.1
+Synopsis:    Solo5 block driver implementation
+Authors:     Dan Williams
 License:     ISC
 Plugins:     META (0.4)
 BuildTools:  ocamlbuild
 
 Library mirage_block_solo5
-  CompiledObject:     best
+  CompiledObject:     native
   Path:               lib
   Findlibname:        mirage-block-solo5
   Modules:            Block
-  BuildDepends:       cstruct, cstruct, lwt, mirage-types
+  BuildDepends:       cstruct, lwt, mirage-types

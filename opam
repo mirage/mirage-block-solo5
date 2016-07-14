@@ -1,23 +1,21 @@
 opam-version: "1.2"
-maintainer:   "dave@recoil.org"
+maintainer:   "martin@lucina.net"
 homepage:     "https://github.com/mirage/mirage-block-solo5"
 dev-repo:     "https://github.com/mirage/mirage-block-solo5.git"
 bug-reports:  "https://github.com/mirage/mirage-block-solo5/issues"
 tags: [
   "org:mirage"
-  "org:xapi-project"
 ]
 build: [ [make] ]
 install: [ [make "install" "BINDIR=%{bin}%"] ]
 remove: [ [make "uninstall" "BINDIR=%{bin}%"] ]
 depends: [
   "ocamlfind"
-  "cmdliner"
   "lwt" {>= "2.4.3"}
   "cstruct" {>= "1.0.1"}
-  "shared-memory-ring" {>= "0.4.1"}
   "mirage-types" {>= "1.1.0"}
-  "ipaddr"
+  "mirage-solo5"
+  
 ]
 ocaml-version: [>= "4.00.0"]
 os: ["linux"]
