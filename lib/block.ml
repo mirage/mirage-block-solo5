@@ -50,13 +50,13 @@ external solo5_blk_read: int64 -> Cstruct.buffer -> int -> bool = "stub_blk_read
 
 let disconnect _id =
   printf "Blkfront: disconnect not implement yet\n";
-  return ()
+  return_unit
 
 let connect name =
   let sector_size = solo5_blk_sector_size () in
   let size_sectors = solo5_blk_sectors () in
   let read_write = solo5_blk_rw () in
-  return (`Ok { name; info = { sector_size; size_sectors; read_write } })
+  return ({ name; info = { sector_size; size_sectors; read_write } })
 
 
 let do_write sector b =
