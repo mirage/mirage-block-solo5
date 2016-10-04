@@ -34,8 +34,6 @@ type info = {
   size_sectors: int64;
 }
 
-type id = string
-
 type t = {
     name: string;
     info: info;
