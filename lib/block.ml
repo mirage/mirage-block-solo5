@@ -18,15 +18,11 @@
 open Lwt
 open Printf
 
-type error =
-  [ `Disconnected
-  | `Is_read_only
-  | `Unimplemented
-  | `Unknown of string ]
-
 type 'a io = 'a Lwt.t
 
 type page_aligned_buffer = Cstruct.t
+
+type error = V1.Block.error
 
 type info = {
   read_write: bool;
@@ -61,30 +57,29 @@ let do_write sector b =
   return (solo5_blk_write sector b.Cstruct.buffer b.Cstruct.len)
                   
 let rec write x sector_start buffers = match buffers with
-    | [] -> return (`Ok ())
+    | [] -> return (Ok ())
     | b :: bs ->
        let new_start = Int64.(add sector_start (div (of_int (Cstruct.len b)) 
                                                     (of_int x.info.sector_size))) in
        Lwt.bind (do_write sector_start b) 
                 (fun (result) -> match result with
-                                 | false -> return (`Error (`Unknown "solo5 blk write"))
+                                 | false -> return (Error (`Msg "solo5 blk write"))
                                  | true -> write x new_start bs)
 
 let do_read sector b =
   return (solo5_blk_read sector b.Cstruct.buffer b.Cstruct.len)
 
 let rec read x sector_start pages = match pages with
-    | [] -> return (`Ok())
+    | [] -> return (Ok())
     | b :: bs ->
        let new_start = Int64.(add sector_start (div (of_int (Cstruct.len b)) 
                                                     (of_int x.info.sector_size))) in
        Lwt.bind (do_read sector_start b) 
                 (fun (result) -> match result with
-                                 | false -> return (`Error (`Unknown "solo5 blk read"))
+                                 | false -> return (Error (`Msg "solo5 blk read"))
                                  | true -> read x new_start bs)
 
 
 let get_info t =
   return t.info
-
 
