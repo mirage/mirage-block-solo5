@@ -17,22 +17,29 @@
 
 open Lwt
 open Printf
+open Result
+open Mirage_block
 
 type 'a io = 'a Lwt.t
 
 type page_aligned_buffer = Cstruct.t
 
-type error = V1.Block.error
+type error = [ Mirage_block.error | `Read ]
 
-type info = {
-  read_write: bool;
-  sector_size: int;
-  size_sectors: int64;
-}
+let pp_error ppf = function
+  | #Mirage_block.error as e -> Mirage_block.pp_error ppf e
+  | `Read -> Fmt.string ppf "solo5 blk write"
+
+
+type write_error = [ Mirage_block.write_error | `Write ]
+
+let pp_write_error ppf = function
+  | #Mirage_block.write_error as e -> Mirage_block.pp_write_error ppf e
+  | `Write -> Fmt.string ppf "solo5 blk read"
 
 type t = {
     name: string;
-    info: info;
+    info: Mirage_block.info;
   }
 
 external solo5_blk_sector_size: unit -> int = "stub_blk_sector_size"
@@ -55,15 +62,15 @@ let connect name =
 
 let do_write sector b =
   return (solo5_blk_write sector b.Cstruct.buffer b.Cstruct.len)
-                  
+
 let rec write x sector_start buffers = match buffers with
     | [] -> return (Ok ())
     | b :: bs ->
-       let new_start = Int64.(add sector_start (div (of_int (Cstruct.len b)) 
+       let new_start = Int64.(add sector_start (div (of_int (Cstruct.len b))
                                                     (of_int x.info.sector_size))) in
-       Lwt.bind (do_write sector_start b) 
+       Lwt.bind (do_write sector_start b)
                 (fun (result) -> match result with
-                                 | false -> return (Error (`Msg "solo5 blk write"))
+                                 | false -> return (Error `Write)
                                  | true -> write x new_start bs)
 
 let do_read sector b =
@@ -72,14 +79,13 @@ let do_read sector b =
 let rec read x sector_start pages = match pages with
     | [] -> return (Ok())
     | b :: bs ->
-       let new_start = Int64.(add sector_start (div (of_int (Cstruct.len b)) 
+       let new_start = Int64.(add sector_start (div (of_int (Cstruct.len b))
                                                     (of_int x.info.sector_size))) in
-       Lwt.bind (do_read sector_start b) 
+       Lwt.bind (do_read sector_start b)
                 (fun (result) -> match result with
-                                 | false -> return (Error (`Msg "solo5 blk read"))
+                                 | false -> return (Error `Read)
                                  | true -> read x new_start bs)
 
 
 let get_info t =
   return t.info
-
