@@ -1,3 +1,7 @@
+## v0.2.1 (2017-01-17)
+
+* Declare dependency on result and fmt in opam (@hannesm, #8)
+
 ## v0.2.0 (2017-01-17)
 
 * Port to topkg (@yomimono, #5)
