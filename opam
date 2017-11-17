@@ -19,5 +19,5 @@ depends: [
   "mirage-block-lwt" {>= "1.0.0"}
   "mirage-solo5"
   "fmt"
-  "result"
 ]
+available: [ ocaml-version >= "4.03.0" ]

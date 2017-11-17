@@ -17,7 +17,6 @@
 
 open Lwt
 open Printf
-open Result
 open Mirage_block
 
 type 'a io = 'a Lwt.t
