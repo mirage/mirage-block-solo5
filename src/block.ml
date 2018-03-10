@@ -16,6 +16,7 @@
  *)
 
 open Mirage_block
+open OS.Solo5
 
 type 'a io = 'a Lwt.t
 
@@ -52,12 +53,6 @@ type solo5_block_info = {
   capacity: int64;
   block_size: int64;
 }
-
-type solo5_result =
-  | SOLO5_R_OK
-  | SOLO5_R_AGAIN
-  | SOLO5_R_EINVAL
-  | SOLO5_R_EUNSPEC
 
 external solo5_block_info:
   unit -> solo5_block_info = "mirage_solo5_block_info"
