@@ -1,6 +1,6 @@
 version = "%%VERSION_NUM%%"
 description = "Solo5 block driver implementation"
-requires = "cstruct lwt mirage-block-lwt mirage-solo5"
+requires = "cstruct lwt mirage-block-lwt mirage-solo5 fmt"
 archive(byte) = "mirage_block_solo5.cma"
 archive(native) = "mirage_block_solo5.cmxa"
 plugin(byte) = "mirage_block_solo5.cma"
