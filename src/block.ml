@@ -1,6 +1,7 @@
 (*
  * Copyright (c) 2011 Anil Madhavapeddy <anil@recoil.org>
  * Copyright (c) 2012 Citrix Systems Inc
+ * Copyright (c) 2018 Martin Lucina <martin@lucina.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
