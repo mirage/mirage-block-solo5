@@ -1,4 +1,3 @@
 true: annot, bin_annot, safe_string
-true: warn(A-44)
 
-<src/*> : package(cstruct lwt mirage-block-lwt fmt)
+<src/*> : package(cstruct lwt mirage-block-lwt mirage-solo5 fmt)
