@@ -58,9 +58,9 @@ type solo5_block_info = {
 external solo5_block_info:
   unit -> solo5_block_info = "mirage_solo5_block_info"
 external solo5_block_read:
-  int64 -> Cstruct.buffer -> int -> solo5_result = "mirage_solo5_block_read"
+  int64 -> Cstruct.buffer -> int -> int -> solo5_result = "mirage_solo5_block_read_2"
 external solo5_block_write:
-  int64 -> Cstruct.buffer -> int -> solo5_result = "mirage_solo5_block_write"
+  int64 -> Cstruct.buffer -> int -> int -> solo5_result = "mirage_solo5_block_write_2"
 
 let disconnect _id =
   (* not implemented *)
@@ -80,7 +80,7 @@ let connect name =
  *)
 
 let do_write1 offset b =
-  let r = match solo5_block_write offset b.Cstruct.buffer b.Cstruct.len with
+  let r = match solo5_block_write offset b.Cstruct.buffer b.Cstruct.off b.Cstruct.len with
     | SOLO5_R_OK      -> Ok ()
     | SOLO5_R_AGAIN   -> assert false
     | SOLO5_R_EINVAL  -> Error `Invalid_argument
@@ -102,7 +102,7 @@ let write x sector_start buffers =
   do_write offset buffers
 
 let do_read1 offset b =
-  let r = match solo5_block_read offset b.Cstruct.buffer b.Cstruct.len with
+  let r = match solo5_block_read offset b.Cstruct.buffer b.Cstruct.off b.Cstruct.len with
     | SOLO5_R_OK      -> Ok ()
     | SOLO5_R_AGAIN   -> assert false
     | SOLO5_R_EINVAL  -> Error `Invalid_argument
