@@ -7,14 +7,16 @@ authors:      ["Dan Williams" "Martin Lucina"]
 tags: [
   "org:mirage"
 ]
+
 build: [
-  ["ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%"]
+ ["dune" "subst"] {pinned}
+ ["dune" "build" "-p" name "-j" jobs]
+ ["dune" "runtest" "-p" name] {with-test}
 ]
+
 depends: [
   "ocaml" {>= "4.04.2"}
-  "ocamlfind"  {build}
-  "ocamlbuild" {build}
-  "topkg"      {build}
+  "dune"  {build & >= "1.0"}
   "lwt" {>= "2.4.3"}
   "cstruct" {>= "1.0.1"}
   "mirage-block-lwt" {>= "1.0.0"}
