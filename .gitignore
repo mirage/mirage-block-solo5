@@ -1,6 +1,7 @@
 _build/
-*.merlin
-*.install
+setup.bin
+setup.data
+setup.log
 configure
 config.mk
 configure.cmi

@@ -1,0 +1,3 @@
+true: annot, bin_annot, safe_string
+
+<src/*> : package(cstruct lwt mirage-block-lwt mirage-solo5 fmt)
