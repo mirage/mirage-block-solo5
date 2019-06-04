@@ -17,7 +17,7 @@
  *)
 
 open Mirage_block
-open OS.Solo5
+open OS_Solo5.Solo5
 
 type 'a io = 'a Lwt.t
 
