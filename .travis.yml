@@ -10,6 +10,10 @@ env:
     global:
         - TESTS=false PACKAGE=mirage-block-solo5
     matrix:
-        - OCAML_VERSION=4.09
-        - OCAML_VERSION=4.08
-        - OCAML_VERSION=4.07
+        - OCAML_VERSION=4.09 EXTRA_DEPS="solo5-bindings-hvt"
+        - OCAML_VERSION=4.09 EXTRA_DEPS="solo5-bindings-spt"
+        - OCAML_VERSION=4.09 EXTRA_DEPS="solo5-bindings-virtio"
+        - OCAML_VERSION=4.09 EXTRA_DEPS="solo5-bindings-muen"
+        - OCAML_VERSION=4.09 EXTRA_DEPS="solo5-bindings-genode"
+        - OCAML_VERSION=4.08 EXTRA_DEPS="solo5-bindings-hvt"
+        - OCAML_VERSION=4.07 EXTRA_DEPS="solo5-bindings-hvt"
