@@ -23,6 +23,7 @@ type 'a io = 'a Lwt.t
 
 type t = {
   name: string;
+  handle: int64;
   info: Mirage_block.info;
 }
 
@@ -55,23 +56,37 @@ type solo5_block_info = {
   block_size: int64;
 }
 
-external solo5_block_info:
-  unit -> solo5_block_info = "mirage_solo5_block_info"
+external solo5_block_acquire:
+  string -> solo5_result * int64 * solo5_block_info =
+      "mirage_solo5_block_acquire"
 external solo5_block_read:
-  int64 -> Cstruct.buffer -> int -> int -> solo5_result = "mirage_solo5_block_read_2"
+  int64 -> int64 -> Cstruct.buffer -> int -> int -> solo5_result =
+      "mirage_solo5_block_read_3"
 external solo5_block_write:
-  int64 -> Cstruct.buffer -> int -> int -> solo5_result = "mirage_solo5_block_write_2"
+  int64 -> int64 -> Cstruct.buffer -> int -> int -> solo5_result =
+      "mirage_solo5_block_write_3"
 
 let disconnect _id =
   (* not implemented *)
   Lwt.return_unit
 
 let connect name =
-  let bi = solo5_block_info () in
-  let sector_size = Int64.to_int bi.block_size in
-  let size_sectors = (Int64.div bi.capacity bi.block_size) in
-  let read_write = true in
-  Lwt.return ({ name; info = { sector_size; size_sectors; read_write } })
+  match solo5_block_acquire name with
+    | (SOLO5_R_OK, handle, bi) -> (
+      let sector_size = Int64.to_int bi.block_size in
+      let size_sectors = (Int64.div bi.capacity bi.block_size) in
+      let read_write = true in
+      let t = {
+          name; handle;
+          info = { sector_size; size_sectors; read_write } }
+      in
+      Lwt.return t
+    )
+    | (SOLO5_R_AGAIN, _, _)   -> assert false (* not returned by solo5_block_acquire *)
+    | (SOLO5_R_EINVAL, _, _)  ->
+      Lwt.fail_with (Fmt.strf "Block: connect(%s): Invalid argument" name)
+    | (SOLO5_R_EUNSPEC, _, _) ->
+      Lwt.fail_with (Fmt.strf "Block: connect(%s): Unspecified error" name)
 
 (* XXX: also applies to read: unclear if mirage actually issues I/O requests
  * that are >1 sector in size *per buffer*. mirage-skeleton device-usage/block
@@ -79,8 +94,8 @@ let connect name =
  * Solo5 layer and return an error back if it happens.
  *)
 
-let do_write1 offset b =
-  let r = match solo5_block_write offset b.Cstruct.buffer b.Cstruct.off b.Cstruct.len with
+let do_write1 h offset b =
+  let r = match solo5_block_write h offset b.Cstruct.buffer b.Cstruct.off b.Cstruct.len with
     | SOLO5_R_OK      -> Ok ()
     | SOLO5_R_AGAIN   -> assert false
     | SOLO5_R_EINVAL  -> Error `Invalid_argument
@@ -88,21 +103,21 @@ let do_write1 offset b =
   in
   Lwt.return r
 
-let rec do_write offset buffers = match buffers with
+let rec do_write h offset buffers = match buffers with
   | [] -> Lwt.return (Ok ())
   | b :: bs ->
      let new_offset = Int64.(add offset (of_int (Cstruct.len b))) in
-     Lwt.bind (do_write1 offset b)
+     Lwt.bind (do_write1 h offset b)
               (fun (result) -> match result with
                                | Error e -> Lwt.return (Error e)
-                               | Ok () -> do_write new_offset bs)
+                               | Ok () -> do_write h new_offset bs)
 
 let write x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
-  do_write offset buffers
+  do_write x.handle offset buffers
 
-let do_read1 offset b =
-  let r = match solo5_block_read offset b.Cstruct.buffer b.Cstruct.off b.Cstruct.len with
+let do_read1 h offset b =
+  let r = match solo5_block_read h offset b.Cstruct.buffer b.Cstruct.off b.Cstruct.len with
     | SOLO5_R_OK      -> Ok ()
     | SOLO5_R_AGAIN   -> assert false
     | SOLO5_R_EINVAL  -> Error `Invalid_argument
@@ -110,17 +125,17 @@ let do_read1 offset b =
   in
   Lwt.return r
 
-let rec do_read offset buffers = match buffers with
+let rec do_read h offset buffers = match buffers with
   | [] -> Lwt.return (Ok ())
   | b :: bs ->
      let new_offset = Int64.(add offset (of_int (Cstruct.len b))) in
-     Lwt.bind (do_read1 offset b)
+     Lwt.bind (do_read1 h offset b)
               (fun (result) -> match result with
                                | Error e -> Lwt.return (Error e)
-                               | Ok () -> do_read new_offset bs)
+                               | Ok () -> do_read h new_offset bs)
 
 let read x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
-  do_read offset buffers
+  do_read x.handle offset buffers
 
 let get_info t = Lwt.return t.info
