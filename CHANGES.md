@@ -1,3 +1,9 @@
+## v0.6.0 (2019-09-25)
+
+* Synchronise version number with other Mirage/Solo5 component packages.
+* Update to Solo5 0.6.0+ APIs, multiple devices support (@mato, #18)
+* Port to dune (@pascutto, #16)
+
 ## v0.4.0 (2018-11-08)
 
 * Correctly use Cstruct buffer offset (@mato, #15)
