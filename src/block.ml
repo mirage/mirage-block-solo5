@@ -16,18 +16,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open Mirage_block
 open OS.Solo5
-
-type 'a io = 'a Lwt.t
 
 type t = {
   name: string;
   handle: int64;
   info: Mirage_block.info;
 }
-
-type page_aligned_buffer = Cstruct.t
 
 type error = [
   | Mirage_block.error
