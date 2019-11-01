@@ -1,3 +1,8 @@
+## v0.6.1 (2019-11-01)
+
+* Adapt to mirage-block 2.0.0 changes (@hannesm, #19)
+* Raise lower bound to OCaml 4.06.0 (@hannesm, #19)
+
 ## v0.6.0 (2019-09-25)
 
 * Synchronise version number with other Mirage/Solo5 component packages.
