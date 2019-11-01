@@ -3,6 +3,8 @@ maintainer:   "martin@lucina.net"
 homepage:     "https://github.com/mirage/mirage-block-solo5"
 dev-repo:     "git+https://github.com/mirage/mirage-block-solo5.git"
 bug-reports:  "https://github.com/mirage/mirage-block-solo5/issues"
+doc:           "https://mirage.github.io/mirage-block-solo5/"
+license:       "ISC"
 authors:      ["Dan Williams" "Martin Lucina"]
 tags: [
   "org:mirage"
