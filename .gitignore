@@ -6,3 +6,5 @@ config.mk
 configure.cmi
 configure.cmx
 configure.o
+duniverse
+*.locked

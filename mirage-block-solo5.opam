@@ -22,7 +22,7 @@ depends: [
   "lwt" {>= "2.4.3"}
   "cstruct" {>= "6.0.0"}
   "mirage-block" {>= "2.0.0"}
-  "mirage-solo5" {>= "0.6.0" & < "0.7.0"}
+  "mirage-solo5" {>= "0.7.0"}
   "fmt" {>= "0.8.7"}
 ]
 synopsis: "Solo5 implementation of MirageOS block interface"

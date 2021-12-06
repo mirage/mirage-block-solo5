@@ -1,4 +1,7 @@
 (library
  (name block)
  (public_name mirage-block-solo5)
- (libraries cstruct lwt mirage-block mirage-solo5 fmt))
+ (libraries cstruct lwt mirage-block mirage-solo5 fmt)
+ (foreign_stubs
+  (language c)
+  (names solo5_block_stubs)))
