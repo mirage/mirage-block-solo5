@@ -79,9 +79,9 @@ let connect name =
     )
     | (SOLO5_R_AGAIN, _, _)   -> assert false (* not returned by solo5_block_acquire *)
     | (SOLO5_R_EINVAL, _, _)  ->
-      Lwt.fail_with (Fmt.strf "Block: connect(%s): Invalid argument" name)
+      Lwt.fail_with (Fmt.str "Block: connect(%s): Invalid argument" name)
     | (SOLO5_R_EUNSPEC, _, _) ->
-      Lwt.fail_with (Fmt.strf "Block: connect(%s): Unspecified error" name)
+      Lwt.fail_with (Fmt.str "Block: connect(%s): Unspecified error" name)
 
 (* XXX: also applies to read: unclear if mirage actually issues I/O requests
  * that are >1 sector in size *per buffer*. mirage-skeleton device-usage/block
@@ -101,7 +101,7 @@ let do_write1 h offset b =
 let rec do_write h offset buffers = match buffers with
   | [] -> Lwt.return (Ok ())
   | b :: bs ->
-     let new_offset = Int64.(add offset (of_int (Cstruct.len b))) in
+     let new_offset = Int64.(add offset (of_int (Cstruct.length b))) in
      Lwt.bind (do_write1 h offset b)
               (fun (result) -> match result with
                                | Error e -> Lwt.return (Error e)
@@ -123,7 +123,7 @@ let do_read1 h offset b =
 let rec do_read h offset buffers = match buffers with
   | [] -> Lwt.return (Ok ())
   | b :: bs ->
-     let new_offset = Int64.(add offset (of_int (Cstruct.len b))) in
+     let new_offset = Int64.(add offset (of_int (Cstruct.length b))) in
      Lwt.bind (do_read1 h offset b)
               (fun (result) -> match result with
                                | Error e -> Lwt.return (Error e)
