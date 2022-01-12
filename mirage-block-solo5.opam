@@ -28,3 +28,9 @@ depends: [
 synopsis: "Solo5 implementation of MirageOS block interface"
 description:
   "This library implements the MirageOS block interface for Solo5 targets."
+pin-depends: [
+  [ "mirage-solo5.dev" "git+https://github.com/dinosaure/mirage-solo5.git#f5d3100f70e7343ebe8d6ff5a544fb966296c7ef" ]
+  [ "mirage-runtime.4.0.0" "git+https://github.com/mirage/mirage.git#59101cd795e741982a0a4580c113072339e1389b" ]
+  [ "functoria-runtime.4.0.0" "git+https://github.com/mirage/mirage.git#59101cd795e741982a0a4580c113072339e1389b" ]
+  [ "functoria.4.0.0" "git+https://github.com/mirage/mirage.git#59101cd795e741982a0a4580c113072339e1389b" ]
+]
