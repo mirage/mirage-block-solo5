@@ -5,3 +5,9 @@
  (foreign_stubs
   (language c)
   (names solo5_block_stubs)))
+
+(rule
+ (target solo5_block_stubs.c)
+ (deps solo5_block_stubs.freestanding.c solo5_block_stubs.default.c)
+ (action
+  (copy solo5_block_stubs.%{context_name}.c %{target})))
