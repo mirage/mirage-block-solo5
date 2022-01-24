@@ -16,7 +16,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open OS.Solo5
+open Solo5_os.Solo5
 
 type t = {
   name: string;
