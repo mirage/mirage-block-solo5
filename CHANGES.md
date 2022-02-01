@@ -1,3 +1,10 @@
+## v0.7.0 (2022-02-01)
+
+* Adapt to the new `mirage-block.2.0.0` API (@hannesm, #20)
+* Be able to install & build `mirage-block-solo5` without the expected `dune`'s context
+  (@TheLortex, @dinosaure, #21)
+* Use `Solo5_os` instead of `OS` (@dinosaure, #22)
+
 ## v0.6.1 (2019-11-01)
 
 * Adapt to mirage-block 2.0.0 changes (@hannesm, #19)

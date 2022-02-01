@@ -11,14 +11,14 @@ tags: [
 ]
 
 build: [
- ["dune" "subst"] {pinned}
+ ["dune" "subst"] {dev}
  ["dune" "build" "-p" name "-j" jobs]
  ["dune" "runtest" "-p" name] {with-test}
 ]
 
 depends: [
   "ocaml" {>= "4.08.0"}
-  "dune"  {>= "1.0"}
+  "dune"  {>= "2.0"}
   "lwt" {>= "2.4.3"}
   "cstruct" {>= "6.0.0"}
   "mirage-block" {>= "2.0.0"}
@@ -28,9 +28,3 @@ depends: [
 synopsis: "Solo5 implementation of MirageOS block interface"
 description:
   "This library implements the MirageOS block interface for Solo5 targets."
-pin-depends: [
-  [ "mirage-solo5.dev" "git+https://github.com/mirage/mirage-solo5.git#38ab99739b93af6e63d3ea31106572f361131fd1" ]
-  [ "mirage-runtime.4.0.0" "git+https://github.com/mirage/mirage.git#59101cd795e741982a0a4580c113072339e1389b" ]
-  [ "functoria-runtime.4.0.0" "git+https://github.com/mirage/mirage.git#59101cd795e741982a0a4580c113072339e1389b" ]
-  [ "functoria.4.0.0" "git+https://github.com/mirage/mirage.git#59101cd795e741982a0a4580c113072339e1389b" ]
-]
