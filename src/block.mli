@@ -15,4 +15,5 @@
  *)
 
 include Mirage_block.S
+
 val connect : string -> t Lwt.t
