@@ -1,3 +1,8 @@
+## v0.8.0 (2022-03-27)
+
+* Rename the freestanding toolchain to solo5 (@dinosaure, #24)
+* Use ocamlformat (@samoht, #26)
+
 ## v0.7.0 (2022-02-01)
 
 * Adapt to the new `mirage-block.2.0.0` API (@hannesm, #20)
