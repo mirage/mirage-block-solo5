@@ -1,3 +1,8 @@
+## v0.6.2 (2022-04-04)
+
+* Avoid deprecated fmt and cstruct functions, requires cstruct 6.0.0 and
+  fmt 0.8.7 (@hannesm, #20)
+
 ## v0.6.1 (2019-11-01)
 
 * Adapt to mirage-block 2.0.0 changes (@hannesm, #19)
