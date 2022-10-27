@@ -74,6 +74,9 @@ let connect name =
  * Solo5 layer and return an error back if it happens.
  *)
 
+let buffers_aligned sector_size =
+  List.for_all (fun b -> Cstruct.length b mod sector_size = 0)
+
 let do_write1 h offset b =
   let r =
     match
@@ -98,7 +101,10 @@ let rec do_write h offset buffers =
 
 let write x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
-  do_write x.handle offset buffers
+  if buffers_aligned x.info.sector_size buffers then
+    do_write x.handle offset buffers
+  else
+    Lwt.return (Error `Invalid_argument)
 
 let do_read1 h offset b =
   let r =
@@ -124,6 +130,9 @@ let rec do_read h offset buffers =
 
 let read x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
-  do_read x.handle offset buffers
+  if buffers_aligned x.info.sector_size buffers then
+    do_read x.handle offset buffers
+  else
+    Lwt.return (Error `Invalid_argument)
 
 let get_info t = Lwt.return t.info
