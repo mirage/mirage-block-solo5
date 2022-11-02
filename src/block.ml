@@ -19,22 +19,32 @@
 open Solo5_os.Solo5
 
 type t = { name : string; handle : int64; info : Mirage_block.info }
-type error = [ Mirage_block.error | `Invalid_argument | `Unspecified_error | `Buffer_alignment ]
+
+type error =
+  [ Mirage_block.error
+  | `Invalid_argument
+  | `Unspecified_error
+  | `Buffer_alignment ]
 
 let pp_error ppf = function
   | #Mirage_block.error as e -> Mirage_block.pp_error ppf e
   | `Invalid_argument -> Fmt.string ppf "Invalid argument"
   | `Unspecified_error -> Fmt.string ppf "Unspecified error"
-  | `Buffer_alignment -> Fmt.string ppf "Invalid argument: buffers must be sector aligned"
+  | `Buffer_alignment ->
+      Fmt.string ppf "Invalid argument: buffers must be sector aligned"
 
 type write_error =
-  [ Mirage_block.write_error | `Invalid_argument | `Unspecified_error | `Buffer_alignment ]
+  [ Mirage_block.write_error
+  | `Invalid_argument
+  | `Unspecified_error
+  | `Buffer_alignment ]
 
 let pp_write_error ppf = function
   | #Mirage_block.write_error as e -> Mirage_block.pp_write_error ppf e
   | `Invalid_argument -> Fmt.string ppf "Invalid argument"
   | `Unspecified_error -> Fmt.string ppf "Unspecified error"
-  | `Buffer_alignment -> Fmt.string ppf "Invalid argument: buffers must be sector aligned"
+  | `Buffer_alignment ->
+      Fmt.string ppf "Invalid argument: buffers must be sector aligned"
 
 type solo5_block_info = { capacity : int64; block_size : int64 }
 
@@ -105,8 +115,7 @@ let write x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
   if buffers_aligned x.info.sector_size buffers then
     do_write x.handle offset buffers
-  else
-    Lwt.return (Error `Buffer_alignment)
+  else Lwt.return (Error `Buffer_alignment)
 
 let do_read1 h offset b =
   let r =
@@ -134,7 +143,6 @@ let read x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
   if buffers_aligned x.info.sector_size buffers then
     do_read x.handle offset buffers
-  else
-    Lwt.return (Error `Buffer_alignment)
+  else Lwt.return (Error `Buffer_alignment)
 
 let get_info t = Lwt.return t.info
