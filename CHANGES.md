@@ -1,3 +1,8 @@
+## v0.8.1 (2022-11-29)
+
+* Check that buffers are aligned before conducting I/O (#29 @reynir)
+* Allow read/write with buffers being multiple of sector_size (#28 @reynir)
+
 ## v0.8.0 (2022-03-27)
 
 * Rename the freestanding toolchain to solo5 (@dinosaure, #24)
