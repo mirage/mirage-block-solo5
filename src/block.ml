@@ -101,20 +101,24 @@ let do_write1 h offset b =
   in
   Lwt.return r
 
-let rec do_write h offset buffers =
+let rec do_write h sector_size offset buffers =
   match buffers with
   | [] -> Lwt.return (Ok ())
   | b :: bs ->
+      (* the current solo5 implementation limits max I/O size to sector_size *)
+      let b, b' = Cstruct.split b (min (Cstruct.length b) sector_size) in
       let new_offset = Int64.(add offset (of_int (Cstruct.length b))) in
       Lwt.bind (do_write1 h offset b) (fun result ->
           match result with
           | Error e -> Lwt.return (Error e)
-          | Ok () -> do_write h new_offset bs)
+          | Ok () ->
+              if Cstruct.is_empty b' then do_write h sector_size new_offset bs
+              else do_write h sector_size new_offset (b' :: bs))
 
 let write x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
   if buffers_aligned x.info.sector_size buffers then
-    do_write x.handle offset buffers
+    do_write x.handle x.info.sector_size offset buffers
   else Lwt.return (Error `Buffer_alignment)
 
 let do_read1 h offset b =
@@ -129,20 +133,24 @@ let do_read1 h offset b =
   in
   Lwt.return r
 
-let rec do_read h offset buffers =
+let rec do_read h sector_size offset buffers =
   match buffers with
   | [] -> Lwt.return (Ok ())
   | b :: bs ->
+      (* the current solo5 implementation limits max I/O size to sector_size *)
+      let b, b' = Cstruct.split b (min (Cstruct.length b) sector_size) in
       let new_offset = Int64.(add offset (of_int (Cstruct.length b))) in
       Lwt.bind (do_read1 h offset b) (fun result ->
           match result with
           | Error e -> Lwt.return (Error e)
-          | Ok () -> do_read h new_offset bs)
+          | Ok () ->
+              if Cstruct.is_empty b' then do_read h sector_size new_offset bs
+              else do_read h sector_size new_offset (b' :: bs))
 
 let read x sector_start buffers =
   let offset = Int64.(mul sector_start (of_int x.info.sector_size)) in
   if buffers_aligned x.info.sector_size buffers then
-    do_read x.handle offset buffers
+    do_read x.handle x.info.sector_size offset buffers
   else Lwt.return (Error `Buffer_alignment)
 
 let get_info t = Lwt.return t.info
