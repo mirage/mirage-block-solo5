@@ -28,3 +28,4 @@ depends: [
 synopsis: "Solo5 implementation of MirageOS block interface"
 description:
   "This library implements the MirageOS block interface for Solo5 targets."
+x-maintenance-intent: [ "(latest)" ]
